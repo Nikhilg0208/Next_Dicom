@@ -1,25 +1,25 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { RenderingEngine, Enums, init as coreInit } from "@cornerstonejs/core";
-import dicomImageLoader, {
+import { Enums, RenderingEngine, init as coreInit } from "@cornerstonejs/core";
+import {
   init as dicomImageLoaderInit,
 } from "@cornerstonejs/dicom-image-loader";
 import {
-  ToolGroupManager,
-  Enums as csToolsEnums,
-  addTool,
-  StackScrollTool,
   SplineROITool,
+  StackScrollTool,
+  ToolGroupManager,
+  addTool,
+  Enums as csToolsEnums,
   init as toolsInit,
 } from "@cornerstonejs/tools";
+import React, { useEffect, useRef, useState } from "react";
 
+import DebugInfo from "./components/DebugInfo";
 import FileUploader from "./components/FileUploader";
+import Instructions from "./components/Instructions";
+import SliceSlider from "./components/SliceSlider";
 import Toolbar from "./components/Toolbar";
 import Viewport from "./components/Viewport";
-import SliceSlider from "./components/SliceSlider";
-import Instructions from "./components/Instructions";
-import DebugInfo from "./components/DebugInfo";
 
 import styles from "./styles/DicomViewer.module.css";
 
