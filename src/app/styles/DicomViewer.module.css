@@ -1,0 +1,30 @@
+.container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.fileInput {
+  margin: 20px 0;
+}
+
+.viewer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.viewport {
+  background-color: #000;
+  border: 1px solid #333;
+}
+
+.sliderContainer {
+  margin-top: 20px;
+  width: 500px;
+}
+
+.slider {
+  width: 100%;
+}
