@@ -1,14 +1,18 @@
 "use client";
 
-import { Enums, RenderingEngine, init as coreInit } from "@cornerstonejs/core";
 import {
-  init as dicomImageLoaderInit,
-} from "@cornerstonejs/dicom-image-loader";
+  Enums,
+  RenderingEngine,
+  init as coreInit,
+  getEnabledElement,
+} from "@cornerstonejs/core";
+import { init as dicomImageLoaderInit } from "@cornerstonejs/dicom-image-loader";
 import {
   SplineROITool,
   StackScrollTool,
   ToolGroupManager,
   addTool,
+  annotation,
   Enums as csToolsEnums,
   init as toolsInit,
 } from "@cornerstonejs/tools";
@@ -22,13 +26,16 @@ import Toolbar from "./components/Toolbar";
 import Viewport from "./components/Viewport";
 
 import styles from "./styles/DicomViewer.module.css";
+import { fileMap } from "./utils/createRandomSplineAnnotation";
 
 const { ViewportType } = Enums;
 const { MouseBindings } = csToolsEnums;
 
 const DicomViewer: React.FC = () => {
   const viewportRef = useRef<HTMLDivElement>(null);
-  const [imageIds, setImageIds] = useState<string[]>([]);
+  const [imageIds, setImageIds] = useState<
+    { imageId: string; fileName: string }[]
+  >([]);
   const [currentSlice, setCurrentSlice] = useState<number>(0);
   const [activeTool, setActiveTool] = useState<string>("StackScroll");
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
@@ -80,7 +87,11 @@ const DicomViewer: React.FC = () => {
       toolGroupRef.current?.addViewport(viewportId, renderingEngineId);
 
       setToolActive(activeTool);
-      await viewport.setStack(imageIds, currentSlice);
+
+      const ImageIdArray = imageIds.map((entry) => entry.imageId);
+      console.log("viewing time", imageIds, currentSlice);
+      console.log("viewing time", ImageIdArray, currentSlice);
+      await viewport.setStack(ImageIdArray, currentSlice);
       viewport.render();
     };
 
@@ -114,7 +125,40 @@ const DicomViewer: React.FC = () => {
   };
 
   const saveAnnotations = () => {
-    renderingEngineRef.current?.getViewport("dicomViewport")?.render();
+    try {
+      const element = viewportRef.current;
+      if (!element || !element.isConnected) {
+        console.error("Element not found or not connected");
+        return;
+      }
+      const splineAnnotations = annotation.state.getAnnotations(
+        "SplineROI",
+        element
+      );
+      if (!splineAnnotations || splineAnnotations.length === 0) {
+        console.warn("No SplineROI annotations found.");
+        return;
+      }
+      const enabledElement = getEnabledElement(element);
+      const imageId = enabledElement?.viewport?.getCurrentImageId?.();
+      // console.log("image id which you draw", imageId);
+      // console.log("splineAnnotations", splineAnnotations);
+      const matched = imageIds.find((entry) => entry.imageId === imageId);
+      if (!matched) {
+        console.error("Filename not found for imageId:", imageId);
+        return;
+      }
+
+      const { fileName } = matched;
+      const storageKey = `annotations_${fileName}`;
+      if (localStorage.getItem(storageKey)) {
+        localStorage.removeItem(storageKey);
+      }
+
+      localStorage.setItem(storageKey, JSON.stringify(splineAnnotations));
+    } catch (error) {
+      console.error("Error getting annotations:", error);
+    }
   };
 
   const handleToolChange = (tool: string) => {
@@ -125,7 +169,9 @@ const DicomViewer: React.FC = () => {
   const handleSliceChange = async (slice: number) => {
     setCurrentSlice(slice);
     const viewport = renderingEngineRef.current?.getViewport("dicomViewport");
-    await viewport?.setStack(imageIds, slice);
+    const ImageIdArray = imageIds.map((entry) => entry.imageId);
+    console.log("handleSliceChange", ImageIdArray, slice);
+    await viewport?.setStack(ImageIdArray, slice);
     viewport?.render();
   };
 
