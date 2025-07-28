@@ -41,13 +41,22 @@ function loadAnnotations(
 ) {
   const storageKey = `annotations_${fileName}`;
   const saved = localStorage.getItem(storageKey);
+
   if (!saved) {
     console.log("No saved annotations found for", fileName);
     return;
   }
 
   const annotations = JSON.parse(saved);
-  annotation.state.removeAllAnnotations(); // Optional: clears previous slice's annotations
+
+  // ✅ Remove only annotations for THIS imageId (instead of clearing all)
+  const existingAnnotations = annotation.state.getAnnotations(
+    "SplineROI",
+    element
+  );
+  existingAnnotations
+    .filter((ann) => ann.metadata.referencedImageId === imageId)
+    .forEach((ann) => annotation.state.removeAnnotation(ann.annotationUID));
 
   const toolGroup = ToolGroupManager.getToolGroup("dicomToolGroup");
 
@@ -63,6 +72,7 @@ function loadAnnotations(
     const SplineClass = splineConfig.Class;
     const splineInstance = new SplineClass();
 
+    // ✅ Build restored annotation object
     const splineAnnotation = {
       annotationUID: ann.annotationUID,
       metadata: {
@@ -97,10 +107,10 @@ function loadAnnotations(
       splineAnnotation,
       element
     );
-
-    console.log("Restored annotation", addedAnnotation);
+    console.log("✅ Restored annotation", addedAnnotation);
   });
 
+  // ✅ Re-render viewport so restored annotations appear
   const renderingEngine = getRenderingEngine(renderingEngineId);
   const viewport = renderingEngine.getViewport(viewportId);
   viewport.render();
@@ -219,18 +229,27 @@ const DicomViewer: React.FC = () => {
         console.error("Element not found or not connected");
         return;
       }
+
+      // Get all spline annotations on the viewport
       const splineAnnotations = annotation.state.getAnnotations(
         "SplineROI",
         element
       );
+
       if (!splineAnnotations || splineAnnotations.length === 0) {
         console.warn("No SplineROI annotations found.");
         return;
       }
+
+      // Find current imageId (the one being viewed)
       const enabledElement = getEnabledElement(element);
       const imageId = enabledElement?.viewport?.getCurrentImageId?.();
-      // console.log("image id which you draw", imageId);
-      // console.log("splineAnnotations", splineAnnotations);
+
+      if (!imageId) {
+        console.error("Could not retrieve current imageId");
+        return;
+      }
+
       const matched = imageIds.find((entry) => entry.imageId === imageId);
       if (!matched) {
         console.error("Filename not found for imageId:", imageId);
@@ -239,13 +258,24 @@ const DicomViewer: React.FC = () => {
 
       const { fileName } = matched;
       const storageKey = `annotations_${fileName}`;
-      if (localStorage.getItem(storageKey)) {
-        localStorage.removeItem(storageKey);
+
+      // ✅ Filter: Only save annotations that belong to THIS image
+      const filteredAnnotations = splineAnnotations.filter(
+        (ann) => ann.metadata.referencedImageId === imageId
+      );
+
+      if (filteredAnnotations.length === 0) {
+        console.warn("No annotations found for this slice");
+        localStorage.removeItem(storageKey); // Optional: clear old data for this slice
+        return;
       }
 
-      localStorage.setItem(storageKey, JSON.stringify(splineAnnotations));
+      localStorage.setItem(storageKey, JSON.stringify(filteredAnnotations));
+      console.log(
+        `✅ Saved ${filteredAnnotations.length} annotation(s) for ${fileName}`
+      );
     } catch (error) {
-      console.error("Error getting annotations:", error);
+      console.error("Error saving annotations:", error);
     }
   };
 
