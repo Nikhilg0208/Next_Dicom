@@ -3359,15 +3359,15 @@ export namespace Prisma {
   export type DicomWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     imageId?: string
+    annotationUID?: string
     AND?: DicomWhereInput | DicomWhereInput[]
     OR?: DicomWhereInput[]
     NOT?: DicomWhereInput | DicomWhereInput[]
     FrameOfReferenceUID?: StringFilter<"Dicom"> | string
-    annotationUID?: StringFilter<"Dicom"> | string
     toolName?: StringFilter<"Dicom"> | string
     fileName?: StringFilter<"Dicom"> | string
     points?: PointListRelationFilter
-  }, "id" | "imageId">
+  }, "id" | "imageId" | "annotationUID">
 
   export type DicomOrderByWithAggregationInput = {
     id?: SortOrder

@@ -28,7 +28,7 @@ model Dicom {
   id                  String   @id @default(uuid()) @db.Uuid
   imageId             String   @unique
   FrameOfReferenceUID String
-  annotationUID       String
+  annotationUID       String   @unique 
   toolName            String
   fileName            String
   points              Point[]
