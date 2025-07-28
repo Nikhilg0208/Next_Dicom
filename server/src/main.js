@@ -68,6 +68,7 @@ app.post("/api/v1/add-annotation", async (req, res) => {
         FrameOfReferenceUID,
         annotationUID,
         toolName,
+        fileName,
         points: {
           create: points,
         },

@@ -2106,6 +2106,7 @@ export namespace Prisma {
     FrameOfReferenceUID: string | null
     annotationUID: string | null
     toolName: string | null
+    fileName: string | null
   }
 
   export type DicomMaxAggregateOutputType = {
@@ -2114,6 +2115,7 @@ export namespace Prisma {
     FrameOfReferenceUID: string | null
     annotationUID: string | null
     toolName: string | null
+    fileName: string | null
   }
 
   export type DicomCountAggregateOutputType = {
@@ -2122,6 +2124,7 @@ export namespace Prisma {
     FrameOfReferenceUID: number
     annotationUID: number
     toolName: number
+    fileName: number
     _all: number
   }
 
@@ -2132,6 +2135,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: true
     annotationUID?: true
     toolName?: true
+    fileName?: true
   }
 
   export type DicomMaxAggregateInputType = {
@@ -2140,6 +2144,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: true
     annotationUID?: true
     toolName?: true
+    fileName?: true
   }
 
   export type DicomCountAggregateInputType = {
@@ -2148,6 +2153,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: true
     annotationUID?: true
     toolName?: true
+    fileName?: true
     _all?: true
   }
 
@@ -2229,6 +2235,7 @@ export namespace Prisma {
     FrameOfReferenceUID: string
     annotationUID: string
     toolName: string
+    fileName: string
     _count: DicomCountAggregateOutputType | null
     _min: DicomMinAggregateOutputType | null
     _max: DicomMaxAggregateOutputType | null
@@ -2254,6 +2261,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: boolean
     annotationUID?: boolean
     toolName?: boolean
+    fileName?: boolean
     points?: boolean | Dicom$pointsArgs<ExtArgs>
     _count?: boolean | DicomCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dicom"]>
@@ -2264,6 +2272,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: boolean
     annotationUID?: boolean
     toolName?: boolean
+    fileName?: boolean
   }, ExtArgs["result"]["dicom"]>
 
   export type DicomSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2272,6 +2281,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: boolean
     annotationUID?: boolean
     toolName?: boolean
+    fileName?: boolean
   }, ExtArgs["result"]["dicom"]>
 
   export type DicomSelectScalar = {
@@ -2280,9 +2290,10 @@ export namespace Prisma {
     FrameOfReferenceUID?: boolean
     annotationUID?: boolean
     toolName?: boolean
+    fileName?: boolean
   }
 
-  export type DicomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "imageId" | "FrameOfReferenceUID" | "annotationUID" | "toolName", ExtArgs["result"]["dicom"]>
+  export type DicomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "imageId" | "FrameOfReferenceUID" | "annotationUID" | "toolName" | "fileName", ExtArgs["result"]["dicom"]>
   export type DicomInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     points?: boolean | Dicom$pointsArgs<ExtArgs>
     _count?: boolean | DicomCountOutputTypeDefaultArgs<ExtArgs>
@@ -2301,6 +2312,7 @@ export namespace Prisma {
       FrameOfReferenceUID: string
       annotationUID: string
       toolName: string
+      fileName: string
     }, ExtArgs["result"]["dicom"]>
     composites: {}
   }
@@ -2730,6 +2742,7 @@ export namespace Prisma {
     readonly FrameOfReferenceUID: FieldRef<"Dicom", 'String'>
     readonly annotationUID: FieldRef<"Dicom", 'String'>
     readonly toolName: FieldRef<"Dicom", 'String'>
+    readonly fileName: FieldRef<"Dicom", 'String'>
   }
     
 
@@ -3190,7 +3203,8 @@ export namespace Prisma {
     imageId: 'imageId',
     FrameOfReferenceUID: 'FrameOfReferenceUID',
     annotationUID: 'annotationUID',
-    toolName: 'toolName'
+    toolName: 'toolName',
+    fileName: 'fileName'
   };
 
   export type DicomScalarFieldEnum = (typeof DicomScalarFieldEnum)[keyof typeof DicomScalarFieldEnum]
@@ -3328,6 +3342,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: StringFilter<"Dicom"> | string
     annotationUID?: StringFilter<"Dicom"> | string
     toolName?: StringFilter<"Dicom"> | string
+    fileName?: StringFilter<"Dicom"> | string
     points?: PointListRelationFilter
   }
 
@@ -3337,20 +3352,22 @@ export namespace Prisma {
     FrameOfReferenceUID?: SortOrder
     annotationUID?: SortOrder
     toolName?: SortOrder
+    fileName?: SortOrder
     points?: PointOrderByRelationAggregateInput
   }
 
   export type DicomWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    imageId?: string
     AND?: DicomWhereInput | DicomWhereInput[]
     OR?: DicomWhereInput[]
     NOT?: DicomWhereInput | DicomWhereInput[]
-    imageId?: StringFilter<"Dicom"> | string
     FrameOfReferenceUID?: StringFilter<"Dicom"> | string
     annotationUID?: StringFilter<"Dicom"> | string
     toolName?: StringFilter<"Dicom"> | string
+    fileName?: StringFilter<"Dicom"> | string
     points?: PointListRelationFilter
-  }, "id">
+  }, "id" | "imageId">
 
   export type DicomOrderByWithAggregationInput = {
     id?: SortOrder
@@ -3358,6 +3375,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: SortOrder
     annotationUID?: SortOrder
     toolName?: SortOrder
+    fileName?: SortOrder
     _count?: DicomCountOrderByAggregateInput
     _max?: DicomMaxOrderByAggregateInput
     _min?: DicomMinOrderByAggregateInput
@@ -3372,6 +3390,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: StringWithAggregatesFilter<"Dicom"> | string
     annotationUID?: StringWithAggregatesFilter<"Dicom"> | string
     toolName?: StringWithAggregatesFilter<"Dicom"> | string
+    fileName?: StringWithAggregatesFilter<"Dicom"> | string
   }
 
   export type PointCreateInput = {
@@ -3435,6 +3454,7 @@ export namespace Prisma {
     FrameOfReferenceUID: string
     annotationUID: string
     toolName: string
+    fileName: string
     points?: PointCreateNestedManyWithoutDicomInput
   }
 
@@ -3444,6 +3464,7 @@ export namespace Prisma {
     FrameOfReferenceUID: string
     annotationUID: string
     toolName: string
+    fileName: string
     points?: PointUncheckedCreateNestedManyWithoutDicomInput
   }
 
@@ -3453,6 +3474,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: StringFieldUpdateOperationsInput | string
     annotationUID?: StringFieldUpdateOperationsInput | string
     toolName?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
     points?: PointUpdateManyWithoutDicomNestedInput
   }
 
@@ -3462,6 +3484,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: StringFieldUpdateOperationsInput | string
     annotationUID?: StringFieldUpdateOperationsInput | string
     toolName?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
     points?: PointUncheckedUpdateManyWithoutDicomNestedInput
   }
 
@@ -3471,6 +3494,7 @@ export namespace Prisma {
     FrameOfReferenceUID: string
     annotationUID: string
     toolName: string
+    fileName: string
   }
 
   export type DicomUpdateManyMutationInput = {
@@ -3479,6 +3503,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: StringFieldUpdateOperationsInput | string
     annotationUID?: StringFieldUpdateOperationsInput | string
     toolName?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
   }
 
   export type DicomUncheckedUpdateManyInput = {
@@ -3487,6 +3512,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: StringFieldUpdateOperationsInput | string
     annotationUID?: StringFieldUpdateOperationsInput | string
     toolName?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
   }
 
   export type UuidFilter<$PrismaModel = never> = {
@@ -3615,6 +3641,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: SortOrder
     annotationUID?: SortOrder
     toolName?: SortOrder
+    fileName?: SortOrder
   }
 
   export type DicomMaxOrderByAggregateInput = {
@@ -3623,6 +3650,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: SortOrder
     annotationUID?: SortOrder
     toolName?: SortOrder
+    fileName?: SortOrder
   }
 
   export type DicomMinOrderByAggregateInput = {
@@ -3631,6 +3659,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: SortOrder
     annotationUID?: SortOrder
     toolName?: SortOrder
+    fileName?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -3819,6 +3848,7 @@ export namespace Prisma {
     FrameOfReferenceUID: string
     annotationUID: string
     toolName: string
+    fileName: string
   }
 
   export type DicomUncheckedCreateWithoutPointsInput = {
@@ -3827,6 +3857,7 @@ export namespace Prisma {
     FrameOfReferenceUID: string
     annotationUID: string
     toolName: string
+    fileName: string
   }
 
   export type DicomCreateOrConnectWithoutPointsInput = {
@@ -3851,6 +3882,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: StringFieldUpdateOperationsInput | string
     annotationUID?: StringFieldUpdateOperationsInput | string
     toolName?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
   }
 
   export type DicomUncheckedUpdateWithoutPointsInput = {
@@ -3859,6 +3891,7 @@ export namespace Prisma {
     FrameOfReferenceUID?: StringFieldUpdateOperationsInput | string
     annotationUID?: StringFieldUpdateOperationsInput | string
     toolName?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
   }
 
   export type PointCreateWithoutDicomInput = {

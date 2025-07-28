@@ -133,7 +133,8 @@ exports.Prisma.DicomScalarFieldEnum = {
   imageId: 'imageId',
   FrameOfReferenceUID: 'FrameOfReferenceUID',
   annotationUID: 'annotationUID',
-  toolName: 'toolName'
+  toolName: 'toolName',
+  fileName: 'fileName'
 };
 
 exports.Prisma.SortOrder = {

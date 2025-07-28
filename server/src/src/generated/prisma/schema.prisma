@@ -25,9 +25,10 @@ model Point {
 
 model Dicom {
   id                  String  @id @default(uuid()) @db.Uuid
-  imageId             String
+  imageId             String  @unique
   FrameOfReferenceUID String
   annotationUID       String
   toolName            String
+  fileName            String
   points              Point[]
 }

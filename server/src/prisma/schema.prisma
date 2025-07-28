@@ -30,6 +30,7 @@ model Dicom {
   FrameOfReferenceUID String
   annotationUID       String
   toolName            String
+  fileName            String
   points              Point[]
 }
 
