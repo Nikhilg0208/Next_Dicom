@@ -120,8 +120,20 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.PointScalarFieldEnum = {
+  id: 'id',
+  x: 'x',
+  y: 'y',
+  z: 'z',
+  dicomId: 'dicomId'
+};
+
 exports.Prisma.DicomScalarFieldEnum = {
-  id: 'id'
+  id: 'id',
+  imageId: 'imageId',
+  FrameOfReferenceUID: 'FrameOfReferenceUID',
+  annotationUID: 'annotationUID',
+  toolName: 'toolName'
 };
 
 exports.Prisma.SortOrder = {
@@ -136,6 +148,7 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
+  Point: 'Point',
   Dicom: 'Dicom'
 };
 

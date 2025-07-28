@@ -14,6 +14,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Dicom {
-  id String @id @default(uuid()) @db.Uuid
+model Point {
+  id      String   @id @default(uuid()) @db.Uuid
+  x       Float
+  y       Float
+  z       Float
+  dicom   Dicom    @relation(fields: [dicomId], references: [id], onDelete: Cascade)
+  dicomId String  @db.Uuid
 }
+
+
+model Dicom {
+  id                  String   @id @default(uuid()) @db.Uuid
+  imageId             String   @unique
+  FrameOfReferenceUID String
+  annotationUID       String
+  toolName            String
+  points              Point[]
+}
+

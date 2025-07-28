@@ -14,6 +14,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
+ * Model Point
+ * 
+ */
+export type Point = $Result.DefaultSelection<Prisma.$PointPayload>
+/**
  * Model Dicom
  * 
  */
@@ -26,8 +31,8 @@ export type Dicom = $Result.DefaultSelection<Prisma.$DicomPayload>
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Dicoms
- * const dicoms = await prisma.dicom.findMany()
+ * // Fetch zero or more Points
+ * const points = await prisma.point.findMany()
  * ```
  *
  *
@@ -47,8 +52,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Dicoms
-   * const dicoms = await prisma.dicom.findMany()
+   * // Fetch zero or more Points
+   * const points = await prisma.point.findMany()
    * ```
    *
    *
@@ -145,6 +150,16 @@ export class PrismaClient<
   }>>
 
       /**
+   * `prisma.point`: Exposes CRUD operations for the **Point** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Points
+    * const points = await prisma.point.findMany()
+    * ```
+    */
+  get point(): Prisma.PointDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.dicom`: Exposes CRUD operations for the **Dicom** model.
     * Example usage:
     * ```ts
@@ -593,6 +608,7 @@ export namespace Prisma {
 
 
   export const ModelName: {
+    Point: 'Point',
     Dicom: 'Dicom'
   };
 
@@ -612,10 +628,84 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "dicom"
+      modelProps: "point" | "dicom"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
+      Point: {
+        payload: Prisma.$PointPayload<ExtArgs>
+        fields: Prisma.PointFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PointFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PointFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointPayload>
+          }
+          findFirst: {
+            args: Prisma.PointFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PointFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointPayload>
+          }
+          findMany: {
+            args: Prisma.PointFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointPayload>[]
+          }
+          create: {
+            args: Prisma.PointCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointPayload>
+          }
+          createMany: {
+            args: Prisma.PointCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PointCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointPayload>[]
+          }
+          delete: {
+            args: Prisma.PointDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointPayload>
+          }
+          update: {
+            args: Prisma.PointUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointPayload>
+          }
+          deleteMany: {
+            args: Prisma.PointDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PointUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PointUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointPayload>[]
+          }
+          upsert: {
+            args: Prisma.PointUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointPayload>
+          }
+          aggregate: {
+            args: Prisma.PointAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePoint>
+          }
+          groupBy: {
+            args: Prisma.PointGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PointGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PointCountArgs<ExtArgs>
+            result: $Utils.Optional<PointCountAggregateOutputType> | number
+          }
+        }
+      }
       Dicom: {
         payload: Prisma.$DicomPayload<ExtArgs>
         fields: Prisma.DicomFieldRefs
@@ -774,6 +864,7 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
+    point?: PointOmit
     dicom?: DicomOmit
   }
 
@@ -864,10 +955,1140 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type DicomCountOutputType
+   */
+
+  export type DicomCountOutputType = {
+    points: number
+  }
+
+  export type DicomCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    points?: boolean | DicomCountOutputTypeCountPointsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DicomCountOutputType without action
+   */
+  export type DicomCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DicomCountOutputType
+     */
+    select?: DicomCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DicomCountOutputType without action
+   */
+  export type DicomCountOutputTypeCountPointsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PointWhereInput
+  }
+
 
   /**
    * Models
    */
+
+  /**
+   * Model Point
+   */
+
+  export type AggregatePoint = {
+    _count: PointCountAggregateOutputType | null
+    _avg: PointAvgAggregateOutputType | null
+    _sum: PointSumAggregateOutputType | null
+    _min: PointMinAggregateOutputType | null
+    _max: PointMaxAggregateOutputType | null
+  }
+
+  export type PointAvgAggregateOutputType = {
+    x: number | null
+    y: number | null
+    z: number | null
+  }
+
+  export type PointSumAggregateOutputType = {
+    x: number | null
+    y: number | null
+    z: number | null
+  }
+
+  export type PointMinAggregateOutputType = {
+    id: string | null
+    x: number | null
+    y: number | null
+    z: number | null
+    dicomId: string | null
+  }
+
+  export type PointMaxAggregateOutputType = {
+    id: string | null
+    x: number | null
+    y: number | null
+    z: number | null
+    dicomId: string | null
+  }
+
+  export type PointCountAggregateOutputType = {
+    id: number
+    x: number
+    y: number
+    z: number
+    dicomId: number
+    _all: number
+  }
+
+
+  export type PointAvgAggregateInputType = {
+    x?: true
+    y?: true
+    z?: true
+  }
+
+  export type PointSumAggregateInputType = {
+    x?: true
+    y?: true
+    z?: true
+  }
+
+  export type PointMinAggregateInputType = {
+    id?: true
+    x?: true
+    y?: true
+    z?: true
+    dicomId?: true
+  }
+
+  export type PointMaxAggregateInputType = {
+    id?: true
+    x?: true
+    y?: true
+    z?: true
+    dicomId?: true
+  }
+
+  export type PointCountAggregateInputType = {
+    id?: true
+    x?: true
+    y?: true
+    z?: true
+    dicomId?: true
+    _all?: true
+  }
+
+  export type PointAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Point to aggregate.
+     */
+    where?: PointWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Points to fetch.
+     */
+    orderBy?: PointOrderByWithRelationInput | PointOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PointWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Points from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Points.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Points
+    **/
+    _count?: true | PointCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PointAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PointSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PointMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PointMaxAggregateInputType
+  }
+
+  export type GetPointAggregateType<T extends PointAggregateArgs> = {
+        [P in keyof T & keyof AggregatePoint]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePoint[P]>
+      : GetScalarType<T[P], AggregatePoint[P]>
+  }
+
+
+
+
+  export type PointGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PointWhereInput
+    orderBy?: PointOrderByWithAggregationInput | PointOrderByWithAggregationInput[]
+    by: PointScalarFieldEnum[] | PointScalarFieldEnum
+    having?: PointScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PointCountAggregateInputType | true
+    _avg?: PointAvgAggregateInputType
+    _sum?: PointSumAggregateInputType
+    _min?: PointMinAggregateInputType
+    _max?: PointMaxAggregateInputType
+  }
+
+  export type PointGroupByOutputType = {
+    id: string
+    x: number
+    y: number
+    z: number
+    dicomId: string
+    _count: PointCountAggregateOutputType | null
+    _avg: PointAvgAggregateOutputType | null
+    _sum: PointSumAggregateOutputType | null
+    _min: PointMinAggregateOutputType | null
+    _max: PointMaxAggregateOutputType | null
+  }
+
+  type GetPointGroupByPayload<T extends PointGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PointGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PointGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PointGroupByOutputType[P]>
+            : GetScalarType<T[P], PointGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PointSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    x?: boolean
+    y?: boolean
+    z?: boolean
+    dicomId?: boolean
+    dicom?: boolean | DicomDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["point"]>
+
+  export type PointSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    x?: boolean
+    y?: boolean
+    z?: boolean
+    dicomId?: boolean
+    dicom?: boolean | DicomDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["point"]>
+
+  export type PointSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    x?: boolean
+    y?: boolean
+    z?: boolean
+    dicomId?: boolean
+    dicom?: boolean | DicomDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["point"]>
+
+  export type PointSelectScalar = {
+    id?: boolean
+    x?: boolean
+    y?: boolean
+    z?: boolean
+    dicomId?: boolean
+  }
+
+  export type PointOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "x" | "y" | "z" | "dicomId", ExtArgs["result"]["point"]>
+  export type PointInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dicom?: boolean | DicomDefaultArgs<ExtArgs>
+  }
+  export type PointIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dicom?: boolean | DicomDefaultArgs<ExtArgs>
+  }
+  export type PointIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dicom?: boolean | DicomDefaultArgs<ExtArgs>
+  }
+
+  export type $PointPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Point"
+    objects: {
+      dicom: Prisma.$DicomPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      x: number
+      y: number
+      z: number
+      dicomId: string
+    }, ExtArgs["result"]["point"]>
+    composites: {}
+  }
+
+  type PointGetPayload<S extends boolean | null | undefined | PointDefaultArgs> = $Result.GetResult<Prisma.$PointPayload, S>
+
+  type PointCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PointFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PointCountAggregateInputType | true
+    }
+
+  export interface PointDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Point'], meta: { name: 'Point' } }
+    /**
+     * Find zero or one Point that matches the filter.
+     * @param {PointFindUniqueArgs} args - Arguments to find a Point
+     * @example
+     * // Get one Point
+     * const point = await prisma.point.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PointFindUniqueArgs>(args: SelectSubset<T, PointFindUniqueArgs<ExtArgs>>): Prisma__PointClient<$Result.GetResult<Prisma.$PointPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Point that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PointFindUniqueOrThrowArgs} args - Arguments to find a Point
+     * @example
+     * // Get one Point
+     * const point = await prisma.point.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PointFindUniqueOrThrowArgs>(args: SelectSubset<T, PointFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PointClient<$Result.GetResult<Prisma.$PointPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Point that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PointFindFirstArgs} args - Arguments to find a Point
+     * @example
+     * // Get one Point
+     * const point = await prisma.point.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PointFindFirstArgs>(args?: SelectSubset<T, PointFindFirstArgs<ExtArgs>>): Prisma__PointClient<$Result.GetResult<Prisma.$PointPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Point that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PointFindFirstOrThrowArgs} args - Arguments to find a Point
+     * @example
+     * // Get one Point
+     * const point = await prisma.point.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PointFindFirstOrThrowArgs>(args?: SelectSubset<T, PointFindFirstOrThrowArgs<ExtArgs>>): Prisma__PointClient<$Result.GetResult<Prisma.$PointPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Points that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PointFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Points
+     * const points = await prisma.point.findMany()
+     * 
+     * // Get first 10 Points
+     * const points = await prisma.point.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pointWithIdOnly = await prisma.point.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PointFindManyArgs>(args?: SelectSubset<T, PointFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PointPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Point.
+     * @param {PointCreateArgs} args - Arguments to create a Point.
+     * @example
+     * // Create one Point
+     * const Point = await prisma.point.create({
+     *   data: {
+     *     // ... data to create a Point
+     *   }
+     * })
+     * 
+     */
+    create<T extends PointCreateArgs>(args: SelectSubset<T, PointCreateArgs<ExtArgs>>): Prisma__PointClient<$Result.GetResult<Prisma.$PointPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Points.
+     * @param {PointCreateManyArgs} args - Arguments to create many Points.
+     * @example
+     * // Create many Points
+     * const point = await prisma.point.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PointCreateManyArgs>(args?: SelectSubset<T, PointCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Points and returns the data saved in the database.
+     * @param {PointCreateManyAndReturnArgs} args - Arguments to create many Points.
+     * @example
+     * // Create many Points
+     * const point = await prisma.point.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Points and only return the `id`
+     * const pointWithIdOnly = await prisma.point.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PointCreateManyAndReturnArgs>(args?: SelectSubset<T, PointCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PointPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Point.
+     * @param {PointDeleteArgs} args - Arguments to delete one Point.
+     * @example
+     * // Delete one Point
+     * const Point = await prisma.point.delete({
+     *   where: {
+     *     // ... filter to delete one Point
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PointDeleteArgs>(args: SelectSubset<T, PointDeleteArgs<ExtArgs>>): Prisma__PointClient<$Result.GetResult<Prisma.$PointPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Point.
+     * @param {PointUpdateArgs} args - Arguments to update one Point.
+     * @example
+     * // Update one Point
+     * const point = await prisma.point.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PointUpdateArgs>(args: SelectSubset<T, PointUpdateArgs<ExtArgs>>): Prisma__PointClient<$Result.GetResult<Prisma.$PointPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Points.
+     * @param {PointDeleteManyArgs} args - Arguments to filter Points to delete.
+     * @example
+     * // Delete a few Points
+     * const { count } = await prisma.point.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PointDeleteManyArgs>(args?: SelectSubset<T, PointDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Points.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PointUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Points
+     * const point = await prisma.point.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PointUpdateManyArgs>(args: SelectSubset<T, PointUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Points and returns the data updated in the database.
+     * @param {PointUpdateManyAndReturnArgs} args - Arguments to update many Points.
+     * @example
+     * // Update many Points
+     * const point = await prisma.point.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Points and only return the `id`
+     * const pointWithIdOnly = await prisma.point.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PointUpdateManyAndReturnArgs>(args: SelectSubset<T, PointUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PointPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Point.
+     * @param {PointUpsertArgs} args - Arguments to update or create a Point.
+     * @example
+     * // Update or create a Point
+     * const point = await prisma.point.upsert({
+     *   create: {
+     *     // ... data to create a Point
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Point we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PointUpsertArgs>(args: SelectSubset<T, PointUpsertArgs<ExtArgs>>): Prisma__PointClient<$Result.GetResult<Prisma.$PointPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Points.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PointCountArgs} args - Arguments to filter Points to count.
+     * @example
+     * // Count the number of Points
+     * const count = await prisma.point.count({
+     *   where: {
+     *     // ... the filter for the Points we want to count
+     *   }
+     * })
+    **/
+    count<T extends PointCountArgs>(
+      args?: Subset<T, PointCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PointCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Point.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PointAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PointAggregateArgs>(args: Subset<T, PointAggregateArgs>): Prisma.PrismaPromise<GetPointAggregateType<T>>
+
+    /**
+     * Group by Point.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PointGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PointGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PointGroupByArgs['orderBy'] }
+        : { orderBy?: PointGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PointGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPointGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Point model
+   */
+  readonly fields: PointFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Point.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PointClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dicom<T extends DicomDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DicomDefaultArgs<ExtArgs>>): Prisma__DicomClient<$Result.GetResult<Prisma.$DicomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Point model
+   */
+  interface PointFieldRefs {
+    readonly id: FieldRef<"Point", 'String'>
+    readonly x: FieldRef<"Point", 'Float'>
+    readonly y: FieldRef<"Point", 'Float'>
+    readonly z: FieldRef<"Point", 'Float'>
+    readonly dicomId: FieldRef<"Point", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Point findUnique
+   */
+  export type PointFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Point
+     */
+    select?: PointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Point
+     */
+    omit?: PointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointInclude<ExtArgs> | null
+    /**
+     * Filter, which Point to fetch.
+     */
+    where: PointWhereUniqueInput
+  }
+
+  /**
+   * Point findUniqueOrThrow
+   */
+  export type PointFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Point
+     */
+    select?: PointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Point
+     */
+    omit?: PointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointInclude<ExtArgs> | null
+    /**
+     * Filter, which Point to fetch.
+     */
+    where: PointWhereUniqueInput
+  }
+
+  /**
+   * Point findFirst
+   */
+  export type PointFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Point
+     */
+    select?: PointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Point
+     */
+    omit?: PointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointInclude<ExtArgs> | null
+    /**
+     * Filter, which Point to fetch.
+     */
+    where?: PointWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Points to fetch.
+     */
+    orderBy?: PointOrderByWithRelationInput | PointOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Points.
+     */
+    cursor?: PointWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Points from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Points.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Points.
+     */
+    distinct?: PointScalarFieldEnum | PointScalarFieldEnum[]
+  }
+
+  /**
+   * Point findFirstOrThrow
+   */
+  export type PointFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Point
+     */
+    select?: PointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Point
+     */
+    omit?: PointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointInclude<ExtArgs> | null
+    /**
+     * Filter, which Point to fetch.
+     */
+    where?: PointWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Points to fetch.
+     */
+    orderBy?: PointOrderByWithRelationInput | PointOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Points.
+     */
+    cursor?: PointWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Points from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Points.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Points.
+     */
+    distinct?: PointScalarFieldEnum | PointScalarFieldEnum[]
+  }
+
+  /**
+   * Point findMany
+   */
+  export type PointFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Point
+     */
+    select?: PointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Point
+     */
+    omit?: PointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointInclude<ExtArgs> | null
+    /**
+     * Filter, which Points to fetch.
+     */
+    where?: PointWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Points to fetch.
+     */
+    orderBy?: PointOrderByWithRelationInput | PointOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Points.
+     */
+    cursor?: PointWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Points from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Points.
+     */
+    skip?: number
+    distinct?: PointScalarFieldEnum | PointScalarFieldEnum[]
+  }
+
+  /**
+   * Point create
+   */
+  export type PointCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Point
+     */
+    select?: PointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Point
+     */
+    omit?: PointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Point.
+     */
+    data: XOR<PointCreateInput, PointUncheckedCreateInput>
+  }
+
+  /**
+   * Point createMany
+   */
+  export type PointCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Points.
+     */
+    data: PointCreateManyInput | PointCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Point createManyAndReturn
+   */
+  export type PointCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Point
+     */
+    select?: PointSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Point
+     */
+    omit?: PointOmit<ExtArgs> | null
+    /**
+     * The data used to create many Points.
+     */
+    data: PointCreateManyInput | PointCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Point update
+   */
+  export type PointUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Point
+     */
+    select?: PointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Point
+     */
+    omit?: PointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Point.
+     */
+    data: XOR<PointUpdateInput, PointUncheckedUpdateInput>
+    /**
+     * Choose, which Point to update.
+     */
+    where: PointWhereUniqueInput
+  }
+
+  /**
+   * Point updateMany
+   */
+  export type PointUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Points.
+     */
+    data: XOR<PointUpdateManyMutationInput, PointUncheckedUpdateManyInput>
+    /**
+     * Filter which Points to update
+     */
+    where?: PointWhereInput
+    /**
+     * Limit how many Points to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Point updateManyAndReturn
+   */
+  export type PointUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Point
+     */
+    select?: PointSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Point
+     */
+    omit?: PointOmit<ExtArgs> | null
+    /**
+     * The data used to update Points.
+     */
+    data: XOR<PointUpdateManyMutationInput, PointUncheckedUpdateManyInput>
+    /**
+     * Filter which Points to update
+     */
+    where?: PointWhereInput
+    /**
+     * Limit how many Points to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Point upsert
+   */
+  export type PointUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Point
+     */
+    select?: PointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Point
+     */
+    omit?: PointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Point to update in case it exists.
+     */
+    where: PointWhereUniqueInput
+    /**
+     * In case the Point found by the `where` argument doesn't exist, create a new Point with this data.
+     */
+    create: XOR<PointCreateInput, PointUncheckedCreateInput>
+    /**
+     * In case the Point was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PointUpdateInput, PointUncheckedUpdateInput>
+  }
+
+  /**
+   * Point delete
+   */
+  export type PointDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Point
+     */
+    select?: PointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Point
+     */
+    omit?: PointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointInclude<ExtArgs> | null
+    /**
+     * Filter which Point to delete.
+     */
+    where: PointWhereUniqueInput
+  }
+
+  /**
+   * Point deleteMany
+   */
+  export type PointDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Points to delete
+     */
+    where?: PointWhereInput
+    /**
+     * Limit how many Points to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Point without action
+   */
+  export type PointDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Point
+     */
+    select?: PointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Point
+     */
+    omit?: PointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointInclude<ExtArgs> | null
+  }
+
 
   /**
    * Model Dicom
@@ -881,28 +2102,52 @@ export namespace Prisma {
 
   export type DicomMinAggregateOutputType = {
     id: string | null
+    imageId: string | null
+    FrameOfReferenceUID: string | null
+    annotationUID: string | null
+    toolName: string | null
   }
 
   export type DicomMaxAggregateOutputType = {
     id: string | null
+    imageId: string | null
+    FrameOfReferenceUID: string | null
+    annotationUID: string | null
+    toolName: string | null
   }
 
   export type DicomCountAggregateOutputType = {
     id: number
+    imageId: number
+    FrameOfReferenceUID: number
+    annotationUID: number
+    toolName: number
     _all: number
   }
 
 
   export type DicomMinAggregateInputType = {
     id?: true
+    imageId?: true
+    FrameOfReferenceUID?: true
+    annotationUID?: true
+    toolName?: true
   }
 
   export type DicomMaxAggregateInputType = {
     id?: true
+    imageId?: true
+    FrameOfReferenceUID?: true
+    annotationUID?: true
+    toolName?: true
   }
 
   export type DicomCountAggregateInputType = {
     id?: true
+    imageId?: true
+    FrameOfReferenceUID?: true
+    annotationUID?: true
+    toolName?: true
     _all?: true
   }
 
@@ -980,6 +2225,10 @@ export namespace Prisma {
 
   export type DicomGroupByOutputType = {
     id: string
+    imageId: string
+    FrameOfReferenceUID: string
+    annotationUID: string
+    toolName: string
     _count: DicomCountAggregateOutputType | null
     _min: DicomMinAggregateOutputType | null
     _max: DicomMaxAggregateOutputType | null
@@ -1001,27 +2250,57 @@ export namespace Prisma {
 
   export type DicomSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    imageId?: boolean
+    FrameOfReferenceUID?: boolean
+    annotationUID?: boolean
+    toolName?: boolean
+    points?: boolean | Dicom$pointsArgs<ExtArgs>
+    _count?: boolean | DicomCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dicom"]>
 
   export type DicomSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    imageId?: boolean
+    FrameOfReferenceUID?: boolean
+    annotationUID?: boolean
+    toolName?: boolean
   }, ExtArgs["result"]["dicom"]>
 
   export type DicomSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    imageId?: boolean
+    FrameOfReferenceUID?: boolean
+    annotationUID?: boolean
+    toolName?: boolean
   }, ExtArgs["result"]["dicom"]>
 
   export type DicomSelectScalar = {
     id?: boolean
+    imageId?: boolean
+    FrameOfReferenceUID?: boolean
+    annotationUID?: boolean
+    toolName?: boolean
   }
 
-  export type DicomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id", ExtArgs["result"]["dicom"]>
+  export type DicomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "imageId" | "FrameOfReferenceUID" | "annotationUID" | "toolName", ExtArgs["result"]["dicom"]>
+  export type DicomInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    points?: boolean | Dicom$pointsArgs<ExtArgs>
+    _count?: boolean | DicomCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type DicomIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type DicomIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $DicomPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Dicom"
-    objects: {}
+    objects: {
+      points: Prisma.$PointPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      imageId: string
+      FrameOfReferenceUID: string
+      annotationUID: string
+      toolName: string
     }, ExtArgs["result"]["dicom"]>
     composites: {}
   }
@@ -1416,6 +2695,7 @@ export namespace Prisma {
    */
   export interface Prisma__DicomClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    points<T extends Dicom$pointsArgs<ExtArgs> = {}>(args?: Subset<T, Dicom$pointsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PointPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1446,6 +2726,10 @@ export namespace Prisma {
    */
   interface DicomFieldRefs {
     readonly id: FieldRef<"Dicom", 'String'>
+    readonly imageId: FieldRef<"Dicom", 'String'>
+    readonly FrameOfReferenceUID: FieldRef<"Dicom", 'String'>
+    readonly annotationUID: FieldRef<"Dicom", 'String'>
+    readonly toolName: FieldRef<"Dicom", 'String'>
   }
     
 
@@ -1462,6 +2746,10 @@ export namespace Prisma {
      * Omit specific fields from the Dicom
      */
     omit?: DicomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DicomInclude<ExtArgs> | null
     /**
      * Filter, which Dicom to fetch.
      */
@@ -1481,6 +2769,10 @@ export namespace Prisma {
      */
     omit?: DicomOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DicomInclude<ExtArgs> | null
+    /**
      * Filter, which Dicom to fetch.
      */
     where: DicomWhereUniqueInput
@@ -1498,6 +2790,10 @@ export namespace Prisma {
      * Omit specific fields from the Dicom
      */
     omit?: DicomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DicomInclude<ExtArgs> | null
     /**
      * Filter, which Dicom to fetch.
      */
@@ -1547,6 +2843,10 @@ export namespace Prisma {
      */
     omit?: DicomOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DicomInclude<ExtArgs> | null
+    /**
      * Filter, which Dicom to fetch.
      */
     where?: DicomWhereInput
@@ -1595,6 +2895,10 @@ export namespace Prisma {
      */
     omit?: DicomOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DicomInclude<ExtArgs> | null
+    /**
      * Filter, which Dicoms to fetch.
      */
     where?: DicomWhereInput
@@ -1638,9 +2942,13 @@ export namespace Prisma {
      */
     omit?: DicomOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DicomInclude<ExtArgs> | null
+    /**
      * The data needed to create a Dicom.
      */
-    data?: XOR<DicomCreateInput, DicomUncheckedCreateInput>
+    data: XOR<DicomCreateInput, DicomUncheckedCreateInput>
   }
 
   /**
@@ -1685,6 +2993,10 @@ export namespace Prisma {
      * Omit specific fields from the Dicom
      */
     omit?: DicomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DicomInclude<ExtArgs> | null
     /**
      * The data needed to update a Dicom.
      */
@@ -1752,6 +3064,10 @@ export namespace Prisma {
      */
     omit?: DicomOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DicomInclude<ExtArgs> | null
+    /**
      * The filter to search for the Dicom to update in case it exists.
      */
     where: DicomWhereUniqueInput
@@ -1778,6 +3094,10 @@ export namespace Prisma {
      */
     omit?: DicomOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DicomInclude<ExtArgs> | null
+    /**
      * Filter which Dicom to delete.
      */
     where: DicomWhereUniqueInput
@@ -1798,6 +3118,30 @@ export namespace Prisma {
   }
 
   /**
+   * Dicom.points
+   */
+  export type Dicom$pointsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Point
+     */
+    select?: PointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Point
+     */
+    omit?: PointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointInclude<ExtArgs> | null
+    where?: PointWhereInput
+    orderBy?: PointOrderByWithRelationInput | PointOrderByWithRelationInput[]
+    cursor?: PointWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PointScalarFieldEnum | PointScalarFieldEnum[]
+  }
+
+  /**
    * Dicom without action
    */
   export type DicomDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1809,6 +3153,10 @@ export namespace Prisma {
      * Omit specific fields from the Dicom
      */
     omit?: DicomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DicomInclude<ExtArgs> | null
   }
 
 
@@ -1826,8 +3174,23 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+  export const PointScalarFieldEnum: {
+    id: 'id',
+    x: 'x',
+    y: 'y',
+    z: 'z',
+    dicomId: 'dicomId'
+  };
+
+  export type PointScalarFieldEnum = (typeof PointScalarFieldEnum)[keyof typeof PointScalarFieldEnum]
+
+
   export const DicomScalarFieldEnum: {
-    id: 'id'
+    id: 'id',
+    imageId: 'imageId',
+    FrameOfReferenceUID: 'FrameOfReferenceUID',
+    annotationUID: 'annotationUID',
+    toolName: 'toolName'
   };
 
   export type DicomScalarFieldEnum = (typeof DicomScalarFieldEnum)[keyof typeof DicomScalarFieldEnum]
@@ -1869,6 +3232,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1885,15 +3262,82 @@ export namespace Prisma {
    */
 
 
+  export type PointWhereInput = {
+    AND?: PointWhereInput | PointWhereInput[]
+    OR?: PointWhereInput[]
+    NOT?: PointWhereInput | PointWhereInput[]
+    id?: UuidFilter<"Point"> | string
+    x?: FloatFilter<"Point"> | number
+    y?: FloatFilter<"Point"> | number
+    z?: FloatFilter<"Point"> | number
+    dicomId?: UuidFilter<"Point"> | string
+    dicom?: XOR<DicomScalarRelationFilter, DicomWhereInput>
+  }
+
+  export type PointOrderByWithRelationInput = {
+    id?: SortOrder
+    x?: SortOrder
+    y?: SortOrder
+    z?: SortOrder
+    dicomId?: SortOrder
+    dicom?: DicomOrderByWithRelationInput
+  }
+
+  export type PointWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PointWhereInput | PointWhereInput[]
+    OR?: PointWhereInput[]
+    NOT?: PointWhereInput | PointWhereInput[]
+    x?: FloatFilter<"Point"> | number
+    y?: FloatFilter<"Point"> | number
+    z?: FloatFilter<"Point"> | number
+    dicomId?: UuidFilter<"Point"> | string
+    dicom?: XOR<DicomScalarRelationFilter, DicomWhereInput>
+  }, "id">
+
+  export type PointOrderByWithAggregationInput = {
+    id?: SortOrder
+    x?: SortOrder
+    y?: SortOrder
+    z?: SortOrder
+    dicomId?: SortOrder
+    _count?: PointCountOrderByAggregateInput
+    _avg?: PointAvgOrderByAggregateInput
+    _max?: PointMaxOrderByAggregateInput
+    _min?: PointMinOrderByAggregateInput
+    _sum?: PointSumOrderByAggregateInput
+  }
+
+  export type PointScalarWhereWithAggregatesInput = {
+    AND?: PointScalarWhereWithAggregatesInput | PointScalarWhereWithAggregatesInput[]
+    OR?: PointScalarWhereWithAggregatesInput[]
+    NOT?: PointScalarWhereWithAggregatesInput | PointScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"Point"> | string
+    x?: FloatWithAggregatesFilter<"Point"> | number
+    y?: FloatWithAggregatesFilter<"Point"> | number
+    z?: FloatWithAggregatesFilter<"Point"> | number
+    dicomId?: UuidWithAggregatesFilter<"Point"> | string
+  }
+
   export type DicomWhereInput = {
     AND?: DicomWhereInput | DicomWhereInput[]
     OR?: DicomWhereInput[]
     NOT?: DicomWhereInput | DicomWhereInput[]
     id?: UuidFilter<"Dicom"> | string
+    imageId?: StringFilter<"Dicom"> | string
+    FrameOfReferenceUID?: StringFilter<"Dicom"> | string
+    annotationUID?: StringFilter<"Dicom"> | string
+    toolName?: StringFilter<"Dicom"> | string
+    points?: PointListRelationFilter
   }
 
   export type DicomOrderByWithRelationInput = {
     id?: SortOrder
+    imageId?: SortOrder
+    FrameOfReferenceUID?: SortOrder
+    annotationUID?: SortOrder
+    toolName?: SortOrder
+    points?: PointOrderByRelationAggregateInput
   }
 
   export type DicomWhereUniqueInput = Prisma.AtLeast<{
@@ -1901,10 +3345,19 @@ export namespace Prisma {
     AND?: DicomWhereInput | DicomWhereInput[]
     OR?: DicomWhereInput[]
     NOT?: DicomWhereInput | DicomWhereInput[]
+    imageId?: StringFilter<"Dicom"> | string
+    FrameOfReferenceUID?: StringFilter<"Dicom"> | string
+    annotationUID?: StringFilter<"Dicom"> | string
+    toolName?: StringFilter<"Dicom"> | string
+    points?: PointListRelationFilter
   }, "id">
 
   export type DicomOrderByWithAggregationInput = {
     id?: SortOrder
+    imageId?: SortOrder
+    FrameOfReferenceUID?: SortOrder
+    annotationUID?: SortOrder
+    toolName?: SortOrder
     _count?: DicomCountOrderByAggregateInput
     _max?: DicomMaxOrderByAggregateInput
     _min?: DicomMinOrderByAggregateInput
@@ -1915,34 +3368,125 @@ export namespace Prisma {
     OR?: DicomScalarWhereWithAggregatesInput[]
     NOT?: DicomScalarWhereWithAggregatesInput | DicomScalarWhereWithAggregatesInput[]
     id?: UuidWithAggregatesFilter<"Dicom"> | string
+    imageId?: StringWithAggregatesFilter<"Dicom"> | string
+    FrameOfReferenceUID?: StringWithAggregatesFilter<"Dicom"> | string
+    annotationUID?: StringWithAggregatesFilter<"Dicom"> | string
+    toolName?: StringWithAggregatesFilter<"Dicom"> | string
+  }
+
+  export type PointCreateInput = {
+    id?: string
+    x: number
+    y: number
+    z: number
+    dicom: DicomCreateNestedOneWithoutPointsInput
+  }
+
+  export type PointUncheckedCreateInput = {
+    id?: string
+    x: number
+    y: number
+    z: number
+    dicomId: string
+  }
+
+  export type PointUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    x?: FloatFieldUpdateOperationsInput | number
+    y?: FloatFieldUpdateOperationsInput | number
+    z?: FloatFieldUpdateOperationsInput | number
+    dicom?: DicomUpdateOneRequiredWithoutPointsNestedInput
+  }
+
+  export type PointUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    x?: FloatFieldUpdateOperationsInput | number
+    y?: FloatFieldUpdateOperationsInput | number
+    z?: FloatFieldUpdateOperationsInput | number
+    dicomId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PointCreateManyInput = {
+    id?: string
+    x: number
+    y: number
+    z: number
+    dicomId: string
+  }
+
+  export type PointUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    x?: FloatFieldUpdateOperationsInput | number
+    y?: FloatFieldUpdateOperationsInput | number
+    z?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type PointUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    x?: FloatFieldUpdateOperationsInput | number
+    y?: FloatFieldUpdateOperationsInput | number
+    z?: FloatFieldUpdateOperationsInput | number
+    dicomId?: StringFieldUpdateOperationsInput | string
   }
 
   export type DicomCreateInput = {
     id?: string
+    imageId: string
+    FrameOfReferenceUID: string
+    annotationUID: string
+    toolName: string
+    points?: PointCreateNestedManyWithoutDicomInput
   }
 
   export type DicomUncheckedCreateInput = {
     id?: string
+    imageId: string
+    FrameOfReferenceUID: string
+    annotationUID: string
+    toolName: string
+    points?: PointUncheckedCreateNestedManyWithoutDicomInput
   }
 
   export type DicomUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    imageId?: StringFieldUpdateOperationsInput | string
+    FrameOfReferenceUID?: StringFieldUpdateOperationsInput | string
+    annotationUID?: StringFieldUpdateOperationsInput | string
+    toolName?: StringFieldUpdateOperationsInput | string
+    points?: PointUpdateManyWithoutDicomNestedInput
   }
 
   export type DicomUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    imageId?: StringFieldUpdateOperationsInput | string
+    FrameOfReferenceUID?: StringFieldUpdateOperationsInput | string
+    annotationUID?: StringFieldUpdateOperationsInput | string
+    toolName?: StringFieldUpdateOperationsInput | string
+    points?: PointUncheckedUpdateManyWithoutDicomNestedInput
   }
 
   export type DicomCreateManyInput = {
     id?: string
+    imageId: string
+    FrameOfReferenceUID: string
+    annotationUID: string
+    toolName: string
   }
 
   export type DicomUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    imageId?: StringFieldUpdateOperationsInput | string
+    FrameOfReferenceUID?: StringFieldUpdateOperationsInput | string
+    annotationUID?: StringFieldUpdateOperationsInput | string
+    toolName?: StringFieldUpdateOperationsInput | string
   }
 
   export type DicomUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    imageId?: StringFieldUpdateOperationsInput | string
+    FrameOfReferenceUID?: StringFieldUpdateOperationsInput | string
+    annotationUID?: StringFieldUpdateOperationsInput | string
+    toolName?: StringFieldUpdateOperationsInput | string
   }
 
   export type UuidFilter<$PrismaModel = never> = {
@@ -1957,16 +3501,56 @@ export namespace Prisma {
     not?: NestedUuidFilter<$PrismaModel> | string
   }
 
-  export type DicomCountOrderByAggregateInput = {
-    id?: SortOrder
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type DicomMaxOrderByAggregateInput = {
-    id?: SortOrder
+  export type DicomScalarRelationFilter = {
+    is?: DicomWhereInput
+    isNot?: DicomWhereInput
   }
 
-  export type DicomMinOrderByAggregateInput = {
+  export type PointCountOrderByAggregateInput = {
     id?: SortOrder
+    x?: SortOrder
+    y?: SortOrder
+    z?: SortOrder
+    dicomId?: SortOrder
+  }
+
+  export type PointAvgOrderByAggregateInput = {
+    x?: SortOrder
+    y?: SortOrder
+    z?: SortOrder
+  }
+
+  export type PointMaxOrderByAggregateInput = {
+    id?: SortOrder
+    x?: SortOrder
+    y?: SortOrder
+    z?: SortOrder
+    dicomId?: SortOrder
+  }
+
+  export type PointMinOrderByAggregateInput = {
+    id?: SortOrder
+    x?: SortOrder
+    y?: SortOrder
+    z?: SortOrder
+    dicomId?: SortOrder
+  }
+
+  export type PointSumOrderByAggregateInput = {
+    x?: SortOrder
+    y?: SortOrder
+    z?: SortOrder
   }
 
   export type UuidWithAggregatesFilter<$PrismaModel = never> = {
@@ -1984,8 +3568,155 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type StringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type PointListRelationFilter = {
+    every?: PointWhereInput
+    some?: PointWhereInput
+    none?: PointWhereInput
+  }
+
+  export type PointOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DicomCountOrderByAggregateInput = {
+    id?: SortOrder
+    imageId?: SortOrder
+    FrameOfReferenceUID?: SortOrder
+    annotationUID?: SortOrder
+    toolName?: SortOrder
+  }
+
+  export type DicomMaxOrderByAggregateInput = {
+    id?: SortOrder
+    imageId?: SortOrder
+    FrameOfReferenceUID?: SortOrder
+    annotationUID?: SortOrder
+    toolName?: SortOrder
+  }
+
+  export type DicomMinOrderByAggregateInput = {
+    id?: SortOrder
+    imageId?: SortOrder
+    FrameOfReferenceUID?: SortOrder
+    annotationUID?: SortOrder
+    toolName?: SortOrder
+  }
+
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type DicomCreateNestedOneWithoutPointsInput = {
+    create?: XOR<DicomCreateWithoutPointsInput, DicomUncheckedCreateWithoutPointsInput>
+    connectOrCreate?: DicomCreateOrConnectWithoutPointsInput
+    connect?: DicomWhereUniqueInput
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type DicomUpdateOneRequiredWithoutPointsNestedInput = {
+    create?: XOR<DicomCreateWithoutPointsInput, DicomUncheckedCreateWithoutPointsInput>
+    connectOrCreate?: DicomCreateOrConnectWithoutPointsInput
+    upsert?: DicomUpsertWithoutPointsInput
+    connect?: DicomWhereUniqueInput
+    update?: XOR<XOR<DicomUpdateToOneWithWhereWithoutPointsInput, DicomUpdateWithoutPointsInput>, DicomUncheckedUpdateWithoutPointsInput>
+  }
+
+  export type PointCreateNestedManyWithoutDicomInput = {
+    create?: XOR<PointCreateWithoutDicomInput, PointUncheckedCreateWithoutDicomInput> | PointCreateWithoutDicomInput[] | PointUncheckedCreateWithoutDicomInput[]
+    connectOrCreate?: PointCreateOrConnectWithoutDicomInput | PointCreateOrConnectWithoutDicomInput[]
+    createMany?: PointCreateManyDicomInputEnvelope
+    connect?: PointWhereUniqueInput | PointWhereUniqueInput[]
+  }
+
+  export type PointUncheckedCreateNestedManyWithoutDicomInput = {
+    create?: XOR<PointCreateWithoutDicomInput, PointUncheckedCreateWithoutDicomInput> | PointCreateWithoutDicomInput[] | PointUncheckedCreateWithoutDicomInput[]
+    connectOrCreate?: PointCreateOrConnectWithoutDicomInput | PointCreateOrConnectWithoutDicomInput[]
+    createMany?: PointCreateManyDicomInputEnvelope
+    connect?: PointWhereUniqueInput | PointWhereUniqueInput[]
+  }
+
+  export type PointUpdateManyWithoutDicomNestedInput = {
+    create?: XOR<PointCreateWithoutDicomInput, PointUncheckedCreateWithoutDicomInput> | PointCreateWithoutDicomInput[] | PointUncheckedCreateWithoutDicomInput[]
+    connectOrCreate?: PointCreateOrConnectWithoutDicomInput | PointCreateOrConnectWithoutDicomInput[]
+    upsert?: PointUpsertWithWhereUniqueWithoutDicomInput | PointUpsertWithWhereUniqueWithoutDicomInput[]
+    createMany?: PointCreateManyDicomInputEnvelope
+    set?: PointWhereUniqueInput | PointWhereUniqueInput[]
+    disconnect?: PointWhereUniqueInput | PointWhereUniqueInput[]
+    delete?: PointWhereUniqueInput | PointWhereUniqueInput[]
+    connect?: PointWhereUniqueInput | PointWhereUniqueInput[]
+    update?: PointUpdateWithWhereUniqueWithoutDicomInput | PointUpdateWithWhereUniqueWithoutDicomInput[]
+    updateMany?: PointUpdateManyWithWhereWithoutDicomInput | PointUpdateManyWithWhereWithoutDicomInput[]
+    deleteMany?: PointScalarWhereInput | PointScalarWhereInput[]
+  }
+
+  export type PointUncheckedUpdateManyWithoutDicomNestedInput = {
+    create?: XOR<PointCreateWithoutDicomInput, PointUncheckedCreateWithoutDicomInput> | PointCreateWithoutDicomInput[] | PointUncheckedCreateWithoutDicomInput[]
+    connectOrCreate?: PointCreateOrConnectWithoutDicomInput | PointCreateOrConnectWithoutDicomInput[]
+    upsert?: PointUpsertWithWhereUniqueWithoutDicomInput | PointUpsertWithWhereUniqueWithoutDicomInput[]
+    createMany?: PointCreateManyDicomInputEnvelope
+    set?: PointWhereUniqueInput | PointWhereUniqueInput[]
+    disconnect?: PointWhereUniqueInput | PointWhereUniqueInput[]
+    delete?: PointWhereUniqueInput | PointWhereUniqueInput[]
+    connect?: PointWhereUniqueInput | PointWhereUniqueInput[]
+    update?: PointUpdateWithWhereUniqueWithoutDicomInput | PointUpdateWithWhereUniqueWithoutDicomInput[]
+    updateMany?: PointUpdateManyWithWhereWithoutDicomInput | PointUpdateManyWithWhereWithoutDicomInput[]
+    deleteMany?: PointScalarWhereInput | PointScalarWhereInput[]
   }
 
   export type NestedUuidFilter<$PrismaModel = never> = {
@@ -1997,6 +3728,17 @@ export namespace Prisma {
     gt?: string | StringFieldRefInput<$PrismaModel>
     gte?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedUuidFilter<$PrismaModel> | string
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
@@ -2036,6 +3778,166 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type DicomCreateWithoutPointsInput = {
+    id?: string
+    imageId: string
+    FrameOfReferenceUID: string
+    annotationUID: string
+    toolName: string
+  }
+
+  export type DicomUncheckedCreateWithoutPointsInput = {
+    id?: string
+    imageId: string
+    FrameOfReferenceUID: string
+    annotationUID: string
+    toolName: string
+  }
+
+  export type DicomCreateOrConnectWithoutPointsInput = {
+    where: DicomWhereUniqueInput
+    create: XOR<DicomCreateWithoutPointsInput, DicomUncheckedCreateWithoutPointsInput>
+  }
+
+  export type DicomUpsertWithoutPointsInput = {
+    update: XOR<DicomUpdateWithoutPointsInput, DicomUncheckedUpdateWithoutPointsInput>
+    create: XOR<DicomCreateWithoutPointsInput, DicomUncheckedCreateWithoutPointsInput>
+    where?: DicomWhereInput
+  }
+
+  export type DicomUpdateToOneWithWhereWithoutPointsInput = {
+    where?: DicomWhereInput
+    data: XOR<DicomUpdateWithoutPointsInput, DicomUncheckedUpdateWithoutPointsInput>
+  }
+
+  export type DicomUpdateWithoutPointsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    imageId?: StringFieldUpdateOperationsInput | string
+    FrameOfReferenceUID?: StringFieldUpdateOperationsInput | string
+    annotationUID?: StringFieldUpdateOperationsInput | string
+    toolName?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DicomUncheckedUpdateWithoutPointsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    imageId?: StringFieldUpdateOperationsInput | string
+    FrameOfReferenceUID?: StringFieldUpdateOperationsInput | string
+    annotationUID?: StringFieldUpdateOperationsInput | string
+    toolName?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PointCreateWithoutDicomInput = {
+    id?: string
+    x: number
+    y: number
+    z: number
+  }
+
+  export type PointUncheckedCreateWithoutDicomInput = {
+    id?: string
+    x: number
+    y: number
+    z: number
+  }
+
+  export type PointCreateOrConnectWithoutDicomInput = {
+    where: PointWhereUniqueInput
+    create: XOR<PointCreateWithoutDicomInput, PointUncheckedCreateWithoutDicomInput>
+  }
+
+  export type PointCreateManyDicomInputEnvelope = {
+    data: PointCreateManyDicomInput | PointCreateManyDicomInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PointUpsertWithWhereUniqueWithoutDicomInput = {
+    where: PointWhereUniqueInput
+    update: XOR<PointUpdateWithoutDicomInput, PointUncheckedUpdateWithoutDicomInput>
+    create: XOR<PointCreateWithoutDicomInput, PointUncheckedCreateWithoutDicomInput>
+  }
+
+  export type PointUpdateWithWhereUniqueWithoutDicomInput = {
+    where: PointWhereUniqueInput
+    data: XOR<PointUpdateWithoutDicomInput, PointUncheckedUpdateWithoutDicomInput>
+  }
+
+  export type PointUpdateManyWithWhereWithoutDicomInput = {
+    where: PointScalarWhereInput
+    data: XOR<PointUpdateManyMutationInput, PointUncheckedUpdateManyWithoutDicomInput>
+  }
+
+  export type PointScalarWhereInput = {
+    AND?: PointScalarWhereInput | PointScalarWhereInput[]
+    OR?: PointScalarWhereInput[]
+    NOT?: PointScalarWhereInput | PointScalarWhereInput[]
+    id?: UuidFilter<"Point"> | string
+    x?: FloatFilter<"Point"> | number
+    y?: FloatFilter<"Point"> | number
+    z?: FloatFilter<"Point"> | number
+    dicomId?: UuidFilter<"Point"> | string
+  }
+
+  export type PointCreateManyDicomInput = {
+    id?: string
+    x: number
+    y: number
+    z: number
+  }
+
+  export type PointUpdateWithoutDicomInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    x?: FloatFieldUpdateOperationsInput | number
+    y?: FloatFieldUpdateOperationsInput | number
+    z?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type PointUncheckedUpdateWithoutDicomInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    x?: FloatFieldUpdateOperationsInput | number
+    y?: FloatFieldUpdateOperationsInput | number
+    z?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type PointUncheckedUpdateManyWithoutDicomInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    x?: FloatFieldUpdateOperationsInput | number
+    y?: FloatFieldUpdateOperationsInput | number
+    z?: FloatFieldUpdateOperationsInput | number
   }
 
 
