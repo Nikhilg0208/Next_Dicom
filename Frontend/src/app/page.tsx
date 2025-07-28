@@ -27,7 +27,6 @@ import Toolbar from "./components/Toolbar";
 import Viewport from "./components/Viewport";
 
 import styles from "./styles/DicomViewer.module.css";
-import cornerstoneTools from "@cornerstonejs/tools";
 
 const { ViewportType } = Enums;
 const { MouseBindings } = csToolsEnums;
@@ -61,10 +60,15 @@ function loadAnnotations(
   const toolGroup = ToolGroupManager.getToolGroup("dicomToolGroup");
 
   annotations.forEach((ann) => {
-    const toolInstance = toolGroup.getToolInstance(ann.metadata.toolName);
+    // ann.metadata.toolName
+    // imageId
+    // ann.metadata.FrameOfReferenceUID
+    // annotationUID
+    // ann.data.handles.points
+    const toolInstance = toolGroup.getToolInstance(ann.toolName);
 
     const originalConfig = toolGroup.getToolConfiguration(
-      ann.metadata.toolName,
+      ann.toolName,
       "spline"
     );
     const splineType = originalConfig?.type || "CARDINAL";
@@ -77,14 +81,14 @@ function loadAnnotations(
       annotationUID: ann.annotationUID,
       metadata: {
         referencedImageId: imageId,
-        toolName: ann.metadata.toolName,
+        toolName: ann.toolName,
         viewportId,
         renderingEngineId,
-        FrameOfReferenceUID: ann.metadata.FrameOfReferenceUID,
+        FrameOfReferenceUID: ann.FrameOfReferenceUID,
       },
       data: {
         handles: {
-          points: ann.data.handles.points,
+          points: ann.points,
         },
         label: "",
         cachedStats: {},
@@ -122,7 +126,7 @@ const DicomViewer: React.FC = () => {
     { imageId: string; fileName: string }[]
   >([]);
   const [currentSlice, setCurrentSlice] = useState<number>(0);
-  const [activeTool, setActiveTool] = useState<string>("StackScroll");
+  const [activeTool, setActiveTool] = useState<string>("SplineROI");
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   const renderingEngineRef = useRef<RenderingEngine | null>(null);
@@ -134,9 +138,9 @@ const DicomViewer: React.FC = () => {
       await coreInit();
       await dicomImageLoaderInit();
       await toolsInit();
-
-      addTool(StackScrollTool);
       addTool(SplineROITool);
+      addTool(StackScrollTool);
+
       setIsInitialized(true);
     };
     init();
@@ -167,8 +171,9 @@ const DicomViewer: React.FC = () => {
       const viewport = renderingEngineRef.current.getViewport(viewportId);
 
       toolGroupRef.current = ToolGroupManager.createToolGroup(toolGroupId);
-      toolGroupRef.current?.addTool(StackScrollTool.toolName);
       toolGroupRef.current?.addTool(SplineROITool.toolName);
+      toolGroupRef.current?.addTool(StackScrollTool.toolName);
+
       toolGroupRef.current?.addViewport(viewportId, renderingEngineId);
 
       setToolActive(activeTool);
@@ -260,9 +265,14 @@ const DicomViewer: React.FC = () => {
       const storageKey = `annotations_${fileName}`;
 
       // ✅ Filter: Only save annotations that belong to THIS image
-      const filteredAnnotations = splineAnnotations.filter(
-        (ann) => ann.metadata.referencedImageId === imageId
-      );
+      const filteredAnnotations = splineAnnotations
+        .filter((ann) => ann.metadata.referencedImageId === imageId) // ✅ only current slice
+        .map((ann) => ({
+          toolName: ann.metadata.toolName,
+          FrameOfReferenceUID: ann.metadata.FrameOfReferenceUID,
+          annotationUID: ann.annotationUID,
+          points: ann.data.handles.points,
+        }));
 
       if (filteredAnnotations.length === 0) {
         console.warn("No annotations found for this slice");
