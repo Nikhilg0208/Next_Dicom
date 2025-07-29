@@ -2,7 +2,8 @@ import { config } from "dotenv";
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import prisma from "./prisma/index.js"; // Adjusted import path
+
+import {prisma} from "./prisma/index.js";
 
 config({
   path: "./.env",
