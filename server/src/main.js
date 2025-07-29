@@ -3,7 +3,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 
-import {prisma} from "./prisma/index.js";
+import { prisma } from "./prisma/index.js";
 
 config({
   path: "./.env",
@@ -31,9 +31,9 @@ app.get("/", (req, res) => {
 });
 
 // Using Routes
-
 app.get("/api/v1/get-annotation", async (req, res) => {
   const { imageId } = req.query;
+  console.log("🚀 ~ imageId:", imageId);
 
   if (!imageId || typeof imageId !== "string") {
     return res.status(400).json({
@@ -43,16 +43,31 @@ app.get("/api/v1/get-annotation", async (req, res) => {
   }
 
   try {
-    const annotations = await prisma.dicom.findunique({
+    const annotations = await prisma.dicom.findMany({
       where: {
-        imageId: imageId,
+        fileName: imageId,
       },
       include: {
         points: true,
       },
     });
+    console.log("Fetched annotation for imageId:", annotations);
+    if (!annotations) {
+      return res.status(200).json({ success: true, data: null });
+    }
 
-    res.status(200).json({ success: true, data: annotations });
+    // Revert the points transformation to send back an array of coordinates
+    // const responseData = {
+    //   ...annotation,
+    //   points: annotation.map((ann) => ann.point.coords),
+    // };
+
+    const formattedAnnotations = annotations.map((annotation) => ({
+      ...annotation,
+      points: annotation.points.map((point) => point.coords),
+    }));
+
+    res.status(200).json({ success: true, data: formattedAnnotations });
   } catch (err) {
     console.error("Error fetching annotations:", err);
     res.status(500).json({ success: false, message: "Internal server error" });
@@ -61,28 +76,80 @@ app.get("/api/v1/get-annotation", async (req, res) => {
 
 app.post("/api/v1/add-annotation", async (req, res) => {
   try {
-    const { imageId, FrameOfReferenceUID, annotationUID, toolName, points } =
-      req.body;
+    const { annotations } = req.body;
+    if (!annotations || !Array.isArray(annotations)) {
+      return res.status(400).json({
+        success: false,
+        message: "Request body must contain an 'annotations' array.",
+      });
+    }
 
-    const newAnnotation = await prisma.dicom.create({
-      data: {
+    // Validate all annotations before starting the transaction
+    for (const ann of annotations) {
+      if (
+        !ann.imageId ||
+        !ann.FrameOfReferenceUID ||
+        !ann.annotationUID ||
+        !ann.toolName ||
+        !ann.fileName ||
+        !ann.points ||
+        !Array.isArray(ann.points)
+      ) {
+        return res.status(400).json({
+          success: false,
+          message: `Missing or invalid fields for annotation UID ${
+            ann.annotationUID || "N/A"
+          }`,
+        });
+      }
+    }
+
+    const transactionOperations = annotations.map((annotation) => {
+      const {
         imageId,
         FrameOfReferenceUID,
         annotationUID,
         toolName,
         fileName,
-        points: {
-          create: points,
+        points,
+      } = annotation;
+
+      const formattedPoints = points.map((pt) => ({ coords: pt }));
+
+      // Use upsert to either create a new annotation or update an existing one.
+      return prisma.dicom.upsert({
+        where: { annotationUID },
+        update: {
+          imageId,
+          FrameOfReferenceUID,
+          toolName,
+          fileName,
+          points: {
+            deleteMany: {}, // Delete old points
+            create: formattedPoints, // Create new points
+          },
         },
-      },
-      include: {
-        points: true,
-      },
+        create: {
+          imageId,
+          FrameOfReferenceUID,
+          annotationUID,
+          toolName,
+          fileName,
+          points: {
+            create: formattedPoints,
+          },
+        },
+        include: {
+          points: true,
+        },
+      });
     });
 
-    res.status(201).json({ success: true, data: newAnnotation });
+    const savedAnnotations = await prisma.$transaction(transactionOperations);
+
+    res.status(201).json({ success: true, data: savedAnnotations });
   } catch (err) {
-    console.error("Error creating annotation:", err);
+    console.error("Error creating/updating annotations:", err);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 });

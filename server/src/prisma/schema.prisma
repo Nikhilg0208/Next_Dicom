@@ -15,9 +15,7 @@ datasource db {
 
 model Point {
   id      String   @id @default(uuid()) @db.Uuid
-  x       Float
-  y       Float
-  z       Float
+  coords  Json
   dicom   Dicom    @relation(fields: [dicomId], references: [id], onDelete: Cascade)
   dicomId String  @db.Uuid
 }
@@ -25,11 +23,11 @@ model Point {
 
 model Dicom {
   id                  String   @id @default(uuid()) @db.Uuid
-  imageId             String   @unique
+  imageId             String   
   FrameOfReferenceUID String
   annotationUID       String   @unique 
   toolName            String
-  fileName            String
+  fileName            String   
   points              Point[]
 }
 
